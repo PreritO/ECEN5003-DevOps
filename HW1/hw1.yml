@@ -1,0 +1,32 @@
+---
+- hosts: all
+  become: true
+  tasks: 
+    - name: Installing Packages - GIT
+      apt: name=git state=latest
+    - name: Installing Packages - CURL
+      apt: name=curl state=latest
+    - name: Installing software-properties-common
+      apt: name=software-properties-common state=latest
+    - name: Installing python-software-properties
+      apt: name=python-software-properties state=latest
+    - name: Cloning Ethereum from GIT
+      git:
+        repo: https://github.com/ethereum/go-ethereum
+        version: master
+        dest: go-ethereum
+    - name: Installing Packages - extras-keyring
+      apt: name=ubuntu-extras-keyring state=latest
+    - name: Add another bin dir to system-wide $PATH.
+      copy:
+        dest: /etc/profile.d/custom-path.sh
+        content: 'PATH=$PATH:/usr/lib/go-1.X/bin'
+    - name: Updating GO Language
+      apt_repository: 
+        repo: 'ppa:gophers/archive'
+        codename: trusty
+        update_cache: yes
+    - name: Installing C compilers
+      apt: name=build-essential state=latest
+    - name: Installing GO compilers
+      apt: name=golang state=latest

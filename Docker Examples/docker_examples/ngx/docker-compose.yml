@@ -1,0 +1,16 @@
+version: '3'
+#Each container is defined under services.
+services:
+  ngx:
+    image: nginx
+    ports:
+      - "8000:80"
+    networks:
+      - ngx_net
+    volumes:
+      - /home/vagrant/ngx/files:/nginx
+networks:
+  ngx_net:
+    driver: bridge
+    
+

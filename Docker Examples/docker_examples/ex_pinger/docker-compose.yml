@@ -1,0 +1,6 @@
+version: '3'
+#Each container is defined under services.
+services:
+  ericpinger:
+    build: .
+    command: ["google.com", "-c", "4"]
